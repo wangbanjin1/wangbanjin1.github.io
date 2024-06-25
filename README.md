@@ -1,4 +1,4 @@
-# Blog Title :link: https://wangbanjin1.github.io 
+# chuan chuan blogs :link: https://wangbanjin1.github.io 
 ### :page_facing_up: [1](https://wangbanjin1.github.io/tag.html) 
 ### :speech_balloon: 0 
 ### :hibiscus: 9 
