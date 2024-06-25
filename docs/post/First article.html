@@ -9,14 +9,22 @@
         let theme = localStorage.getItem("meek_theme") || "light";
         document.documentElement.setAttribute("data-color-mode", theme);
     </script>
-<meta name="description" content="# c++学习篇一。">
+<meta name="description" content="### 一些有意思的条款
+
+1.尽量用`const/enum/inline`替换掉`#define`
+
+宁肯以编译器替换掉预处理器，因为#define在预处理时会完成替换过程，所有的宏对编译器都是不可见的。">
 <meta property="og:title" content="First article">
-<meta property="og:description" content="# c++学习篇一。">
+<meta property="og:description" content="### 一些有意思的条款
+
+1.尽量用`const/enum/inline`替换掉`#define`
+
+宁肯以编译器替换掉预处理器，因为#define在预处理时会完成替换过程，所有的宏对编译器都是不可见的。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://wangbanjin1.github.io/post/First%20article.html">
 <meta property="og:image" content="https://th.bing.com/th/id/OIP.MO9kKuliwR3AlBcVAxgsTgHaHa?rs=1&pid=ImgDetMain">
 <title>First article</title>
-
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
 
 </head>
 <style>
@@ -70,7 +78,33 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </div>
 </div>
     <div id="content">
-<div class="markdown-body" id="postBody"><h1>c++学习篇一</h1></div>
+<div class="markdown-body" id="postBody"><h3>一些有意思的条款</h3>
+<p>1.尽量用<code class="notranslate">const/enum/inline</code>替换掉<code class="notranslate">#define</code></p>
+<p>宁肯以编译器替换掉预处理器，因为#define在预处理时会完成替换过程，所有的宏对编译器都是不可见的。</p>
+<p>因此，</p>
+<ul>
+<li>对于单纯常量，最好用<code class="notranslate">const</code>对象或者<code class="notranslate">enums</code>替换掉<code class="notranslate">#define</code></li>
+<li>对于形似函数的宏，最好改用<code class="notranslate">inline</code>替换掉<code class="notranslate">#define</code></li>
+</ul>
+<p>2.尽可能使用<code class="notranslate">const</code></p>
+<p>将某些东西声明为<code class="notranslate">const</code>可以帮助编译器检测出错误的用法，<code class="notranslate">const</code>可以被施加于任何作用域内的对象、函数参数、函数返回类型、成员函数的本体。</p>
+<p>编译器强制实施于数据意义上的const(<code class="notranslate">bitwise constness</code>)，但是编写代码的时候应该使用概念上的const（<code class="notranslate">conceptual constness</code>）</p>
+<p>3.确定对象被使用前已经先被初始化了</p>
+<p>构造函数的时候最好使用成员初值序列，而不要在构造函数本体内使用赋值操作。初值列出的成员变量，其**排列次序**应该和它们在<code class="notranslate">class</code>中的声明次序相同。</p>
+<div class="highlight highlight-source-c++"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-en">A</span>{
+<span class="pl-k">public:</span>
+    <span class="pl-c"><span class="pl-c">//</span>初始化</span>
+    <span class="pl-en">A</span>():x(<span class="pl-c1">123</span>), y(<span class="pl-c1">0</span>) {
+        <span class="pl-c"><span class="pl-c">//</span>赋值</span>
+        x = <span class="pl-c1">123</span>, y = <span class="pl-c1">0</span>;
+    }
+    <span class="pl-en">A</span>():y(<span class="pl-c1">123</span>), x(y - <span class="pl-c1">1</span>) {
+        <span class="pl-c"><span class="pl-c">//</span>注意尽管如此写，初始化的时候还是会先去初始化x。最后结果是，x废了，y没问题。</span>
+    }
+<span class="pl-k">private:</span>
+    <span class="pl-k">int</span> x;
+    <span class="pl-k">int</span> y;
+}；</pre></div></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
 <div class="comments" id="comments"></div>
