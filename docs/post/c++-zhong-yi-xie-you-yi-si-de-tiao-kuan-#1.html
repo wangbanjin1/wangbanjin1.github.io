@@ -104,19 +104,19 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 <p>编译器强制实施于数据意义上的const(<code class="notranslate">bitwise constness</code>)，但是编写代码的时候应该使用概念上的const（<code class="notranslate">conceptual constness</code>）</p>
 <p>3.确定对象被使用前已经先被初始化了</p>
 <p>构造函数的时候最好使用成员初值序列，而不要在构造函数本体内使用赋值操作。初值列出的成员变量，其<strong>排列次序</strong>应该和它们在<code class="notranslate">class</code>中的声明次序相同。</p>
-<div class="highlight highlight-source-c++"><pre class="notranslate"><span class="pl-k">class</span> <span class="pl-en">A</span>{
-<span class="pl-k">public:</span>
-    <span class="pl-c"><span class="pl-c">//</span>初始化</span>
-    <span class="pl-en">A</span>():x(<span class="pl-c1">123</span>), y(<span class="pl-c1">0</span>) {
-        <span class="pl-c"><span class="pl-c">//</span>赋值</span>
-        x = <span class="pl-c1">123</span>, y = <span class="pl-c1">0</span>;
+<div class="highlight highlight-source-c++"><pre class="notranslate"><span class="pl-k">class</span> A{
+<span class="pl-k">public</span>:
+    //初始化
+    A():x(123), y(0) {
+        //赋值
+        x = 123, y = 0;
     }
-    <span class="pl-en">A</span>():y(<span class="pl-c1">123</span>), x(y - <span class="pl-c1">1</span>) {
-        <span class="pl-c"><span class="pl-c">//</span>注意尽管如此写，初始化的时候还是会先去初始化x。最后结果是，x废了，y没问题。</span>
+    A():y(123), x(y - 1) {
+        //注意尽管如此写，初始化的时候还是会先去初始化x。最后结果是，x废了，y没问题。
     }
-<span class="pl-k">private:</span>
-    <span class="pl-k">int</span> x;
-    <span class="pl-k">int</span> y;
+<span class="pl-k">private</span>:
+    int x;
+    int y;
 }；</pre></div></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 
